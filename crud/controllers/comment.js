@@ -1,3 +1,4 @@
+const Article = require('../model/articles')
 const Comment = require('../model/comment')
 
 class CommentController {
@@ -12,11 +13,22 @@ class CommentController {
 
   static async create (req, res) {
     try {
-      const result = await new Articles(req.body)
-      await result.save()
-      res.status(201).json(result)
+      const article = await Article.findById(req.body.articleId)
+      if (article) {
+        const result = await new Comment(req.body)
+        await result.save()
+        res.status(201).json(result)
+      } else {
+        throw { name: 'Article_Not_Found' }
+      }
     } catch (err) {
-      res.status(500).json(err)
+      if (err.name === 'Article_Not_Found') {
+        res.status(404).json({
+          message: 'Article Not Found'
+        })
+      } else {
+        res.status(500).json(err)
+      }
     }
   }
 

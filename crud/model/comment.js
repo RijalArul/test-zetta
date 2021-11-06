@@ -7,10 +7,9 @@ const CommentSchema = new Schema(
       type: String,
       required: true
     },
-    articlesId: {
+    articleId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Articles',
-      required: true
+      ref: 'Articles'
     }
   },
   {
