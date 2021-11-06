@@ -25,6 +25,4 @@ const ArticleSchema = new Schema(
   }
 )
 
-//  mongoose.model('Products', productsSchema)
-
 module.exports = mongoose.model('Articles', ArticleSchema)
