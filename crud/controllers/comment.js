@@ -13,13 +13,13 @@ class CommentController {
 
   static async create (req, res) {
     try {
-      const article = await Article.findById(req.body.articleId)
+      const article = await Article.findOne({
+        articleId: req.body.articleId
+      })
       if (article) {
         const result = await new Comment(req.body)
         await result.save()
         res.status(201).json(result)
-      } else {
-        throw { name: 'Article_Not_Found' }
       }
     } catch (err) {
       if (err.name === 'Article_Not_Found') {
